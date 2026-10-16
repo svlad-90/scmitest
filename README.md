@@ -91,6 +91,20 @@ usual Yocto installation paths, the binary installs to `/usr/bin/scmitest`.
 Requires an IIO accelerometer with readable `in_accel_x_raw`,
 `in_accel_y_raw`, and `in_accel_z_raw` sysfs attributes.
 
+## Tests
+
+The native Linux tests use temporary IIO files and require Python 3.10 or
+newer. No sensor hardware is needed. Tests are disabled by default.
+
+```sh
+cmake -S . -B build -DBUILD_TESTING=ON
+cmake --build build
+cd build
+ctest --output-on-failure
+```
+
+GitHub Actions runs the build and tests with GCC and Clang.
+
 ## License
 
 Apache License 2.0; see [LICENSE](LICENSE).
