@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: Apache-2.0
+
+package {
+    default_applicable_licenses: ["scmitest_license"],
+}
+
+license {
+    name: "scmitest_license",
+    visibility: [":__subpackages__"],
+    license_kinds: ["SPDX-license-identifier-Apache-2.0"],
+    license_text: ["LICENSE"],
+}
+
+cc_binary {
+    name: "scmitest",
+    srcs: ["src/scmitest.cpp"],
+    cpp_std: "c++17",
+    gnu_extensions: false,
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+    ],
+    vendor: true,
+}
