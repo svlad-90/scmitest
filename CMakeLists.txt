@@ -11,3 +11,14 @@ set_target_properties(scmitest PROPERTIES
 )
 target_compile_options(scmitest PRIVATE -Wall -Wextra -Werror)
 install(TARGETS scmitest RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+option(BUILD_TESTING "Enable tests (requires Python 3.10 or newer)" OFF)
+include(CTest)
+if(BUILD_TESTING)
+    find_package(Python3 3.10 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME scmitest-cli
+        COMMAND "${Python3_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/tests/test_scmitest.py"
+                "$<TARGET_FILE:scmitest>"
+    )
+    set_tests_properties(scmitest-cli PROPERTIES TIMEOUT 60)
+endif()
