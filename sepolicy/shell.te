@@ -1,0 +1,2 @@
+allow shell scmitest_exec:file rx_file_perms;
+r_dir_file(shell, sysfs_iio_devices);

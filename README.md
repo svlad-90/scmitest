@@ -68,10 +68,14 @@ Installation uses the standard CMake `CMAKE_INSTALL_PREFIX` and
 
 ### Android (Soong)
 
-Check out this repository in the Android source tree, for example under
-`vendor/scmitest`, and add `scmitest` to the device product's
-`PRODUCT_PACKAGES`. The checkout directory can have a different name; the
-Soong module installs to `/vendor/bin/scmitest`.
+Check out this repository in the Android source tree, add `scmitest` to the
+device product's `PRODUCT_PACKAGES`, and add the repository's `sepolicy`
+directory to `BOARD_VENDOR_SEPOLICY_DIRS`. The checkout directory can have a
+different name; the Soong module installs to `/vendor/bin/scmitest`.
+
+The supplied policy lets the Android shell execute the tool and read IIO sysfs
+attributes labeled `sysfs_iio_devices`. The integrating device policy must
+define and assign that type to its IIO device tree.
 
 ### Yocto Integration
 
