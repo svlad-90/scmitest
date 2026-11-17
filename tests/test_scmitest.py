@@ -25,7 +25,7 @@ class ScmiTest(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
 
-    def sensor(self, index=0, name="scmi-smoke", values=("0", "101", "202")):
+    def sensor(self, index=0, name="scmi.iio.accel", values=("0", "101", "202")):
         device = self.root / f"iio:device{index}"
         device.mkdir()
         if name is not None:
@@ -46,7 +46,7 @@ class ScmiTest(unittest.TestCase):
         for option in ("--help", "-h"):
             with self.subTest(option=option):
                 result = self.run_tool(option)
-                self.assertIn("Default expected name: scmi-smoke", result.stdout)
+                self.assertIn("Default expected name: scmi.iio.accel", result.stdout)
                 self.assertEqual(result.stderr, "")
 
     def test_invalid_arguments(self):
@@ -61,7 +61,7 @@ class ScmiTest(unittest.TestCase):
         start = time.monotonic()
         result = self.run_tool()
         self.assertGreaterEqual(time.monotonic() - start, 0.09)
-        self.assertIn(f"device={device} name=scmi-smoke\n", result.stdout)
+        self.assertIn(f"device={device} name=scmi.iio.accel\n", result.stdout)
         self.assertIn("sample0 x=0 y=101 z=202\n", result.stdout)
         self.assertIn("sample1 x=0 y=101 z=202\n", result.stdout)
         self.assertIn("delta x=0 y=0 z=0\n", result.stdout)
@@ -97,10 +97,10 @@ class ScmiTest(unittest.TestCase):
         self.assertIn("name=<unknown>", self.run_tool("--list").stdout)
 
     def test_first_line_only(self):
-        device = self.sensor(name="scmi-smoke\nignored")
+        device = self.sensor(name="scmi.iio.accel\nignored")
         (device / "in_accel_x_raw").write_text("7\ninvalid\n", encoding="utf-8")
         result = self.run_tool()
-        self.assertIn("name=scmi-smoke\n", result.stdout)
+        self.assertIn("name=scmi.iio.accel\n", result.stdout)
         self.assertIn("sample0 x=7 ", result.stdout)
 
     def test_embedded_carriage_return_is_preserved(self):
@@ -129,7 +129,7 @@ class ScmiTest(unittest.TestCase):
         incomplete = self.sensor(1, "incomplete")
         (incomplete / "in_accel_y_raw").unlink()
         result = self.run_tool("--list")
-        self.assertIn("name=scmi-smoke accel_triplet=yes", result.stdout)
+        self.assertIn("name=scmi.iio.accel accel_triplet=yes", result.stdout)
         self.assertIn("name=incomplete accel_triplet=no", result.stdout)
         self.assertEqual(result.stderr, "")
 

@@ -5,8 +5,9 @@ Supports generic Linux builds with CMake and Android integration with Soong.
 The implementation has no Yocto-specific dependencies.
 
 The tool reads two accelerometer samples from Linux IIO, 100 ms apart, and
-prints their values and difference. It defaults to the sensor named `scmi-smoke`,
-matching the fake sensor provided by the
+prints their values and difference. It defaults to `scmi.iio.accel`, the name
+used by the Trout IIO Sensors SubHAL for the fake sensor configured by the
+Gen5 product's
 [vhost-device SCMI backend](https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-scmi).
 
 ## Usage
@@ -20,7 +21,7 @@ scmitest -h
 
 | Argument | Description |
 |---|---|
-| `expected-iio-name` | Optional sensor name to select, read from the device's `name` attribute. Defaults to `scmi-smoke`. This is a name, not a device path. The command fails if no readable accelerometer has that name. |
+| `expected-iio-name` | Optional sensor name to select, read from the device's `name` attribute. Defaults to `scmi.iio.accel`. This is a name, not a device path. The command fails if no readable accelerometer has that name. |
 | `--root IIO_ROOT` | Directory containing the `iio:device*` entries to scan. Defaults to `/sys/bus/iio/devices`. Use the parent directory, not an individual device directory. |
 | `--list` | List IIO devices under the selected root, showing each device's path, name, and availability of the three accelerometer attributes. Prints to standard output and exits without reading samples. A positional sensor name is not accepted in this mode. |
 | `--help`, `-h` | Print usage and default values to standard output, then exit without testing a sensor. |

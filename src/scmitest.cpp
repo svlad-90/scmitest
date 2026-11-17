@@ -16,7 +16,7 @@ namespace {
 namespace fs = std::filesystem;
 
 constexpr const char *kIioRoot = "/sys/bus/iio/devices";
-constexpr const char *kDefaultName = "scmi-smoke";
+constexpr const char *kDefaultName = "scmi.iio.accel";
 
 struct Sample {
     long x;
